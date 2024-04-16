@@ -1,9 +1,7 @@
-include <iostream>
-using namespaces std;
+#include <iostream>
 
 int main(int argc, char const *argv[])
 {
-    cout<<"SPACE INVADERS"<<endl;
+    std::cout<<"Space invaders"<<std::endl;
     return 0;
 }
-
