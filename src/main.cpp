@@ -1,33 +1,51 @@
 #include <iostream>
+#include <string>
+#include <thread>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/screen.hpp>
-#include <string>
+#include <ftxui/screen/string.hpp>
+#include <ftxui/screen/terminal.hpp>
+#include <fstream>
 
- using namespace std;
- using namespace ftxui;
-
+using namespace std;
+using namespace ftxui;
 
 int main(int argc, char const *argv[])
 {
- Element lienzo = hbox ({
-   
-    spinner(21,3) | bold
+    std::cout<<"Space invaders"<<std::endl;
+    fstream archivo;
 
- });
+    archivo.open("./assets/images/canon.txt");
+    string canon;
+    archivo >> canon;
+    archivo.close();
 
-Screen pantalla = Screen::Create(
-  
-    Dimension::Full(),
-    Dimension::Fit(lienzo)
-    
-);
+    archivo.open("./assets/images/alien.txt");
+    string alien;
+    archivo >> alien;
+    archivo.close();
 
-Render(pantalla,lienzo);
-pantalla.Print();
-pantalla.ResetPosition();
+    int fotograma = 0;
+    while(true)
+    {
+        fotograma++;
+        Element personaje = spinner(21, fotograma) | bold | color(Color::Yellow1) | bgcolor(Color::Green1);
+        Element tanque = text(canon) | bold | color(Color::Green) | bgcolor(Color::Blue);
+        Element lienzo = hbox({personaje , tanque });
 
-return 0;
+
+        Screen pantalla = Screen::Create(
+            Dimension::Full(),
+            Dimension::Fit(lienzo));
 
 
 
+        Render(pantalla, lienzo);
+        pantalla.Print();
+        cout<<pantalla.ResetPosition();
+
+        this_thread::sleep_for(0.1s);
+    }
+
+    return 0;
 }
