@@ -6,7 +6,7 @@
 #include <ftxui/screen/string.hpp>
 #include <ftxui/screen/terminal.hpp>
 #include <fstream>
-#include <Dibujo.hpp>
+
 
 using namespace std;
 using namespace ftxui;
@@ -15,25 +15,28 @@ int main(int argc, char const *argv[])
 {
     Dibujo dTanque("./assets/images/canon.txt");
     Dibujo dAlien("./assets/images/alien.txt");
-    Dibujo dBloque("./assets/images/canon.txt"); 
+    Dibujo dBloque("./assets/images/canon.txt");
 
     int fotograma = 0;
-    while(true)
+    while (true)
     {
-        fotograma++;
-        Element personaje = spinner(21, fotograma) | bold | color(Color::Yellow1) | bgcolor(Color::Green1);
-        Element tanque = dTanque.GetElement() | bold | color(Color::Green) | bgcolor(Color::Blue);
-        Element lienzo = hbox({personaje , tanque, dAlien.GetElement() });
+    fotograma++;
+    Element personaje = spinner(21, fotograma) | bold | color(Color::Yellow1) | bgcolor(Color::Green1);
+    Element tanque = dTanque.GetElement() | bold | color(Color::Green) | bgcolor(Color::Blue);
+    Element lienzo = hbox({personaje , tanque, dAlien.GetElement()});
+
+    Screen pantalla = Screen::Create(
+        Dimension::Full(),
+        Dimension::Fit(lienzo));
 
 
-        Screen pantalla = Screen::Create(
-            Dimension::Full(),
-            Dimension::Fit(lienzo));
 
-        Render(pantalla, lienzo);
-        pantalla.Print();
-        cout<<pantalla.ResetPosition();
-        this_thread::sleep_for(0.1s);
+    Render(pantalla,lienzo);
+    pantalla.Print();
+    cout<<pantalla.ResetPosition();
+
+    this_thread::sleep_for(0.1s);
     }
+
     return 0;
 }

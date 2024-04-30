@@ -2,6 +2,7 @@
     "files.associations": {
         "chrono": "cpp",
         "algorithm": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "thread": "cpp"
     }
 }
